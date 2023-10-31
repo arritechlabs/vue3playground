@@ -14,26 +14,30 @@ export default {
   },
 
   setup() {
-    const data = ref(null);
+    const loginResponse = ref(null);
 
-    onMounted(async () => {
+    const login = async () => {
       try {
-        const response = await fetch("https://qgenonlinestaging.com/");
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        data.value = await response;
-
-        console.log(data.value);
+        loginResponse.value = await fetch(
+          "https://qgenonlinestaging.com/cfm-api/v1/ping",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
       } catch (error) {
-        console.error("There was a problem with the fetch operation:", error);
+        console.error("Error logging in:", error);
       }
+    };
+
+    onMounted(() => {
+      login();
     });
 
     return {
-      data,
+      loginResponse,
     };
   },
 };
