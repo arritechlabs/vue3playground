@@ -18,7 +18,7 @@ export default {
 
     const login = async () => {
       try {
-        loginResponse.value = await fetch(
+        loginResponse.value = await window.AwsWafIntegration.fetch(
           "https://qgenonlinestaging.com/cfm-api/v1/ping",
           {
             method: "GET",
