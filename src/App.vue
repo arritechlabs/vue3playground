@@ -1,17 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <img alt="Vue logo" src="./assets/logo.png" />
+  <HelloWorld msg="Welcome to Your Vue.js App" />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from "./components/HelloWorld.vue";
+import { ref, onMounted } from "vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    HelloWorld,
+  },
+
+  setup() {
+    const data = ref(null);
+
+    onMounted(async () => {
+      try {
+        const response = await fetch("https://qgenonlinestaging.com/");
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        data.value = await response.json();
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      }
+    });
+
+    return {
+      data,
+    };
+  },
+};
 </script>
 
 <style>
