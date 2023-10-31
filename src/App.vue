@@ -24,7 +24,9 @@ export default {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        data.value = await response.json();
+        data.value = await response;
+
+        console.log(data.value);
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
       }
